@@ -1,5 +1,6 @@
 package kornas.moviecharactersapi.Controllers;
 
+import kornas.moviecharactersapi.Models.Character;
 import kornas.moviecharactersapi.Repositories.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ public class CharacterController {
     @PostMapping("/character")
     public Character createCharacter(@RequestBody Character character)
     {
-        character = characterRepository.save(character);
+        characterRepository.save(character);
         return character;
     }
 

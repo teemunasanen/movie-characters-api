@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class FranchiseController {
 
-    @Autowired
     private FranchiseRepository franchiseRepository;
+
 
     //create
     @PostMapping("/franchise")

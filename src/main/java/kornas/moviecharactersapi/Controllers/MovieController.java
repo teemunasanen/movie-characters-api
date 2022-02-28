@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class MovieController {
 
-    @Autowired
     private MovieRepository movieRepository;
 
     //create
-    @PostMapping("/franchise")
+    @PostMapping("/movie")
     public Movie createMovie(@RequestBody Movie movie)
     {
         movie = movieRepository.save(movie);
