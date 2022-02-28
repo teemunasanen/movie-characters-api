@@ -32,6 +32,7 @@ TODO: Fill out this long description.
 
 ## Maintainers
 
+[@bgf122](https://github.com/bgf122)
 [@teemunasanen](https://github.com/teemunasanen)
 
 ## Contributing
@@ -42,4 +43,4 @@ Small note: If editing the README, please conform to the [standard-readme](https
 
 ## License
 
-MIT © 2022 Teemu Näsänen
+MIT © 2022 Sasu Korhonen & Teemu Näsänen
