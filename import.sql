@@ -1,0 +1,2 @@
+INSERT INTO character (alias, gender, name, photourl) values ('Will', 'Male', 'Will Smith', 'asdasd');
+INSERT INTO character (alias, gender, name, photourl) values ('Bruce', 'Male', 'Bruce Willis', 'asdasd');
