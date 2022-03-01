@@ -1,12 +1,14 @@
 package kornas.moviecharactersapi.Models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table
@@ -15,7 +17,7 @@ public class Franchise {
     // Autoincrement Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer franchise_id;
+    private Long franchise_id;
 
     // Name
     @Column
@@ -27,12 +29,52 @@ public class Franchise {
     @Column
     private String description;
 
-    public Integer getFranchise_id() {
+    @OneToMany(mappedBy = "character_id")
+    public List<Character> characters;
+
+    @JsonGetter("characters")
+    public List<String> characterGetter() {
+        if(characters != null){
+            return characters.stream()
+                    .map(character -> "/api/v1/characters/" + character.getCharacter_id()).collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    @OneToMany(mappedBy = "movie_id")
+    public List<Movie> movies;
+
+    @JsonGetter("movies")
+    public List<String> movieGetter() {
+        if(movies != null){
+            return movies.stream()
+                    .map(movie -> "/api/v1/movies/" + movie.getMovie_id()).collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    public Long getFranchise_id() {
         return franchise_id;
     }
 
-    public void setFranchise_id(Integer franchise_id) {
+    public void setFranchise_id(Long franchise_id) {
         this.franchise_id = franchise_id;
+    }
+
+    public List<Character> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<Character> characters) {
+        this.characters = characters;
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
     }
 
     public String getName() {

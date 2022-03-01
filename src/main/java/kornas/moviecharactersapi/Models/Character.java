@@ -1,9 +1,13 @@
 package kornas.moviecharactersapi.Models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.net.URL;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table
@@ -12,7 +16,7 @@ public class Character {
     // Autoincrement Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long character_id;
 
     // Full name
     @Column
@@ -33,6 +37,29 @@ public class Character {
     // Picture (URL to photo – do not store an image)
     @Column
     private URL photoURL;
+
+    @ManyToMany(mappedBy = "characters")
+    private List<Movie> movies;
+
+    public Long getCharacter_id() {
+        return character_id;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "franchise_id")
+    private Franchise franchise;
+
+    public void setCharacter_id(Long character_id) {
+        this.character_id = character_id;
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
 
     public String getName() {
         return name;
@@ -69,11 +96,12 @@ public class Character {
     @Override
     public String toString() {
         return "Character{" +
-                "id=" + id +
+                "character_id=" + character_id +
                 ", name='" + name + '\'' +
                 ", alias='" + alias + '\'' +
-                ", gender='" + gender + '\'' +
-                ", photoURL='" + photoURL + '\'' +
+                ", gender=" + gender +
+                ", photoURL=" + photoURL +
+                ", movies=" + movies +
                 '}';
     }
 }

@@ -1,10 +1,12 @@
 package kornas.moviecharactersapi.Models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table
@@ -13,7 +15,7 @@ public class Movie {
     // Autoincrement Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer movie_id;
+    private Long movie_id;
 
     // Movie title
     @Column
@@ -23,7 +25,6 @@ public class Movie {
     // Genre (just a simple string of comma separated genres, there is no genre modelling required as a base)
     @Column
     private String genre;
-
 
     // Release year
     @Column
@@ -41,12 +42,56 @@ public class Movie {
     @Column
     private String trailerURL;
 
-    public Integer getMovie_id() {
+    @ManyToMany
+    @JoinTable(
+            name = "movie_characters",
+            joinColumns = {@JoinColumn(name = "movie_id")},
+            inverseJoinColumns = {@JoinColumn(name = "character_id")}
+    )
+    private List<Character> characters;
+
+    @JsonGetter("characters")
+    public List<String> characterGetter() {
+        if(characters != null){
+            return characters.stream()
+                    .map(character -> "/api/v1/characters/" + character.getCharacter_id()).collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "franchise_id")
+    private Franchise franchise;
+
+    @JsonGetter("franchise")
+    public String franchise() {
+        if (franchise != null) {
+            return "/api/v1/franchises/" + franchise.getFranchise_id();
+        } else return null;
+    }
+
+    public List<Character> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<Character> characters) {
+        this.characters = characters;
+    }
+
+    public Long getMovie_id() {
         return movie_id;
     }
 
-    public void setMovie_id(Integer movie_id) {
+    public void setMovie_id(Long movie_id) {
         this.movie_id = movie_id;
+    }
+
+    public Franchise getFranchise() {
+        return franchise;
+    }
+
+    public void setFranchise(Franchise franchise) {
+        this.franchise = franchise;
     }
 
     public String getTitle() {

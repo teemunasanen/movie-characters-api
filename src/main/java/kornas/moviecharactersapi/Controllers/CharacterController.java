@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/characters")
+@RequestMapping("/api/v1/characters")
 public class CharacterController {
 
     @Autowired
@@ -31,7 +31,7 @@ public class CharacterController {
 
     //Read
     @GetMapping("/{id}")
-    public Character getCharacter(@PathVariable Integer id) {
+    public Character getCharacter(@PathVariable Long id) {
         Character character = null;
         if (characterRepository.existsById(id)) {
             // find will guarantee to find a unique character

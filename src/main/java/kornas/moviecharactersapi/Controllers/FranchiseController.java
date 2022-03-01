@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/franchises")
+@RequestMapping("/api/v1/franchises")
 public class FranchiseController {
 
     @Autowired
@@ -31,7 +31,7 @@ public class FranchiseController {
 
     //Read
     @GetMapping("/{id}")
-    public Franchise getFranchise(@PathVariable Integer id) {
+    public Franchise getFranchise(@PathVariable Long id) {
         Franchise franchise = null;
         if (franchiseRepository.existsById(id)) {
             // find will guarantee to find a unique franchise

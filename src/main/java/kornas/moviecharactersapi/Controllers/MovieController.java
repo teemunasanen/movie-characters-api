@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/movies")
+@RequestMapping("/api/v1/movies")
 public class MovieController {
 
     @Autowired
@@ -32,7 +32,7 @@ public class MovieController {
 
     //Read
     @GetMapping("/{id}")
-    public Movie getMovie(@PathVariable Integer id) {
+    public Movie getMovie(@PathVariable Long id) {
         Movie movie = null;
         if (movieRepository.existsById(id)) {
             // find will guarantee to find a unique movie
