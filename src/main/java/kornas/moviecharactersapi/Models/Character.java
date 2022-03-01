@@ -12,27 +12,27 @@ public class Character {
     // Autoincrement Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Integer id;
+    private Integer id;
 
     // Full name
     @Column
     @NotBlank
     @Size(min= 3, max= 100)
-    public String name;
+    private String name;
 
     // Alias (if applicable)
     @Column
     @Size(max= 100)
-    public String alias;
+    private String alias;
 
     // Gender
     @Enumerated(EnumType.STRING)
     @Column
-    public GenderType gender;
+    private GenderType gender;
 
     // Picture (URL to photo – do not store an image)
     @Column
-    public URL photoURL;
+    private URL photoURL;
 
     public String getName() {
         return name;

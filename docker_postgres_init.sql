@@ -1,32 +1,41 @@
 create table character
 (
-    id       serial
+    character_id       serial
         primary key,
-    alias    varchar(255) not null,
-    gender   varchar(255) not null,
-    name     varchar(255) not null,
-    photourl varchar(255) not null
+    alias    varchar(255),
+    gender   varchar(255),
+    name     varchar(255),
+    photourl varchar(255)
 );
-
 
 create table franchise
 (
-    id          serial
+    franchise_id          serial
         primary key,
-    description varchar(255) not null,
-    name        varchar(255) not null
+    description varchar(255),
+    name        varchar(255)
 );
 
 create table movie
 (
-    id         serial
+    movie_id     serial
         primary key,
-    director   varchar(255) not null,
-    genre      varchar(255) not null,
-    posterurl  varchar(255),
-    title      varchar(255) not null,
-    trailerurl varchar(255),
-    year       integer not null
+    director     varchar(255),
+    genre        varchar(255),
+    posterurl    varchar(255),
+    title        varchar(255),
+    trailerurl   varchar(255),
+    year         integer,
+    franchise_id integer
+            references franchise
+);
+
+create table movie_characters
+(
+    character_id integer
+            references character,
+    movie_id     integer
+            references movie
 );
 
 
@@ -41,6 +50,6 @@ insert into franchise
                            ('lord of the rings trilogy', 'Lord of The Rings Trilogy');
 
 insert into movie
-(director, genre, posterurl, title, trailerurl, "year") values
-('Ridley Scott', 'Action', null, 'Gladiator', null, 2000)
+(director, genre, posterurl, title, trailerurl, year, franchise_id) values
+('Ridley Scott', 'Action', null, 'Gladiator', null, 2000, null)
 
