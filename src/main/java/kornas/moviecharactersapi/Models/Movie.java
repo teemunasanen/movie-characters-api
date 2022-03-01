@@ -42,13 +42,8 @@ public class Movie {
     @Column
     private String trailerURL;
 
-    @ManyToMany
-    @JoinTable(
-            name = "movie_characters",
-            joinColumns = {@JoinColumn(name = "movie_id")},
-            inverseJoinColumns = {@JoinColumn(name = "character_id")}
-    )
-    private List<Character> characters;
+    @ManyToMany(mappedBy = "movies")
+    public List<Character> characters;
 
     @JsonGetter("characters")
     public List<String> characterGetter() {
@@ -62,13 +57,6 @@ public class Movie {
     @ManyToOne
     @JoinColumn(name = "franchise_id")
     private Franchise franchise;
-
-    @JsonGetter("franchise")
-    public String franchise() {
-        if (franchise != null) {
-            return "/api/v1/franchises/" + franchise.getFranchise_id();
-        } else return null;
-    }
 
     public List<Character> getCharacters() {
         return characters;

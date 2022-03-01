@@ -19,7 +19,7 @@ public class Character {
     private Long character_id;
 
     // Full name
-    @Column
+    @Column(name = "name")
     @NotBlank
     @Size(min= 3, max= 100)
     private String name;
@@ -38,8 +38,14 @@ public class Character {
     @Column
     private URL photoURL;
 
-    @ManyToMany(mappedBy = "characters")
+    @ManyToMany
+    @JoinTable(
+            name = "movie_characters",
+            joinColumns = {@JoinColumn(name = "character_id")},
+            inverseJoinColumns = {@JoinColumn(name = "movie_id")}
+    )
     private List<Movie> movies;
+
 
     public Long getCharacter_id() {
         return character_id;
@@ -47,7 +53,16 @@ public class Character {
 
     @ManyToOne
     @JoinColumn(name = "franchise_id")
-    private Franchise franchise;
+    public Franchise franchise;
+
+    @JsonGetter("franchise")
+    public String franchiseGetter() {
+        System.out.println(franchise);
+        if(franchise != null){
+            return "/api/v1/franchise" + franchise.getFranchise_id();
+        }
+        return null;
+    }
 
     public void setCharacter_id(Long character_id) {
         this.character_id = character_id;

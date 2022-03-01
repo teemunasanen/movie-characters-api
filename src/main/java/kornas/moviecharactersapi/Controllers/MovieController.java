@@ -1,5 +1,6 @@
 package kornas.moviecharactersapi.Controllers;
 
+import kornas.moviecharactersapi.Models.Character;
 import kornas.moviecharactersapi.Models.Movie;
 import kornas.moviecharactersapi.Repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,15 @@ public class MovieController {
         if (movieRepository.existsById(id)) {
             // find will guarantee to find a unique movie
             movie = movieRepository.findById(id).get();
+        }
+        return movie;
+    }
+
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public Movie updateMovie(@PathVariable Long id, @RequestBody Movie movie) {
+        if (movieRepository.existsById(id)) {
+            movieRepository.save(updateMovie(id, movie));
         }
         return movie;
     }

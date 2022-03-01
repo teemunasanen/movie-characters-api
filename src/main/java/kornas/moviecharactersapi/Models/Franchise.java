@@ -20,7 +20,7 @@ public class Franchise {
     private Long franchise_id;
 
     // Name
-    @Column
+    @Column(name = "name")
     @NotBlank
     @Size(max= 200)
     private String name;
@@ -29,29 +29,35 @@ public class Franchise {
     @Column
     private String description;
 
-    @OneToMany(mappedBy = "character_id")
+    @OneToMany(mappedBy = "franchise")
     public List<Character> characters;
 
     @JsonGetter("characters")
     public List<String> characterGetter() {
+        System.out.println(characters);
         if(characters != null){
             return characters.stream()
-                    .map(character -> "/api/v1/characters/" + character.getCharacter_id()).collect(Collectors.toList());
+                    .map(character -> {
+                        return "/api/v1/characters/" + character.getCharacter_id();
+                    }).collect(Collectors.toList());
         }
         return null;
     }
 
-    @OneToMany(mappedBy = "movie_id")
+
+    @OneToMany(mappedBy = "franchise")
     public List<Movie> movies;
 
     @JsonGetter("movies")
     public List<String> movieGetter() {
+        System.out.println(movies);
         if(movies != null){
             return movies.stream()
                     .map(movie -> "/api/v1/movies/" + movie.getMovie_id()).collect(Collectors.toList());
         }
         return null;
     }
+
 
     public Long getFranchise_id() {
         return franchise_id;
