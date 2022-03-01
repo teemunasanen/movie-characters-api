@@ -1,13 +1,11 @@
 package kornas.moviecharactersapi.Models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.net.URL;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table
