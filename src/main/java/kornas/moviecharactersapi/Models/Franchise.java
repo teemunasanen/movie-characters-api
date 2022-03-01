@@ -1,6 +1,8 @@
 package kornas.moviecharactersapi.Models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table
@@ -13,6 +15,8 @@ public class Franchise {
 
     // Name
     @Column
+    @NotBlank
+    @Size(max= 200)
     public String name;
 
     // Description
