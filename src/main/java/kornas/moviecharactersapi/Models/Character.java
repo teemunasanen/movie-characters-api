@@ -1,6 +1,9 @@
 package kornas.moviecharactersapi.Models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.net.URL;
 
 @Entity
 @Table
@@ -13,27 +16,23 @@ public class Character {
 
     // Full name
     @Column
+    @NotBlank
+    @Size(min= 3, max= 100)
     public String name;
 
     // Alias (if applicable)
     @Column
+    @Size(max= 100)
     public String alias;
 
     // Gender
+    @Enumerated(EnumType.STRING)
     @Column
-    public String gender;
+    public GenderType gender;
 
     // Picture (URL to photo – do not store an image)
     @Column
-    public String photoURL;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public URL photoURL;
 
     public String getName() {
         return name;
@@ -51,19 +50,19 @@ public class Character {
         this.alias = alias;
     }
 
-    public String getGender() {
+    public GenderType getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(GenderType gender) {
         this.gender = gender;
     }
 
-    public String getPhotoURL() {
+    public URL getPhotoURL() {
         return photoURL;
     }
 
-    public void setPhotoURL(String photoURL) {
+    public void setPhotoURL(URL photoURL) {
         this.photoURL = photoURL;
     }
 
