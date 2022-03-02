@@ -40,4 +40,17 @@ public class CharacterController {
         return character;
     }
 
+    @PutMapping("/{id}")
+    public Character updateCharacter(@PathVariable Long id, @RequestBody Character character) {
+        character.setCharacter_id(id);
+        return characterRepository.save(character);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCharacter(@PathVariable Long id) {
+        if (characterRepository.existsById(id)) {
+            characterRepository.deleteById(id);
+        }
+    }
+
 }

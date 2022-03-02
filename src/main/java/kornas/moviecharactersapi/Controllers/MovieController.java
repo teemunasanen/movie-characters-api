@@ -43,12 +43,17 @@ public class MovieController {
     }
 
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @PutMapping("/{id}")
     public Movie updateMovie(@PathVariable Long id, @RequestBody Movie movie) {
+        movie.setMovie_id(id);
+        return movieRepository.save(movie);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteMovie(@PathVariable Long id) {
         if (movieRepository.existsById(id)) {
-            movieRepository.save(updateMovie(id, movie));
+            movieRepository.deleteById(id);
         }
-        return movie;
     }
 
 }

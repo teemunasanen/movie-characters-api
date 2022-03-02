@@ -17,7 +17,7 @@ public class Franchise {
     private Long franchise_id;
 
     // Name
-    @Column(name = "name")
+    @Column
     @NotBlank
     @Size(max= 200)
     private String name;

@@ -1,6 +1,8 @@
 package kornas.moviecharactersapi.Models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,14 +34,20 @@ public class Movie {
     private String director;
 
     // Picture (URL to a movie poster)
-    @Column
+    @Column(name = "poster_url")
     private String posterURL;
 
     // Trailer (YouTube link most likely)
-    @Column
+    @Column(name = "trailer_url")
     private String trailerURL;
 
-    @ManyToMany(mappedBy = "movies")
+    @ManyToMany
+    @JoinTable(
+            name = "movie_characters",
+            joinColumns = {@JoinColumn(name = "movie_id")},
+            inverseJoinColumns = {@JoinColumn(name = "character_id")}
+    )
+    @Nullable
     public List<Character> characters;
 
     @JsonGetter("characters")
@@ -53,7 +61,16 @@ public class Movie {
 
     @ManyToOne
     @JoinColumn(name = "franchise_id")
+    @Nullable
     private Franchise franchise;
+
+    @JsonGetter("franchise")
+    public String franchiseGetter() {
+        if(franchise != null){
+            return "/api/v1/franchise" + franchise.getFranchise_id();
+        }
+        return null;
+    }
 
     public List<Character> getCharacters() {
         return characters;

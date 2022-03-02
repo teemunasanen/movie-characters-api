@@ -9,7 +9,7 @@ insert into franchise
 
 
 insert into character
-(alias, gender, name, photourl, franchise_id) VALUES
+(alias, gender, name, photo_url, franchise_id) VALUES
     ('Will', 'Male', 'Will Smith', 'https://imdb-api.com/images/original/MV5BYWY3ZDRjNzItNzcyZS00NGFiLWEzMWYtOTg5N2NlNTBhNWE0XkEyXkFqcGdeQXVyMDI2NDg0NQ@@._V1_Ratio2.5800_AL_.jpg', 4),
     ('Bruce', 'Male', 'Bruce Willis', 'https://imdb-api.com/images/original/MV5BZGFmMDg1M2ItNDA0Ni00OTNmLTgwOWUtMmJmMzE1ZTJlOWZjXkEyXkFqcGdeQXVyNTk5NzQ5Ng@@._V1_Ratio1.0000_AL_.jpg', 3),
     ('Sly', 'Male', 'Sylvester Stallone','https://imdb-api.com/images/original/MV5BZDBiZDI5MzMtNGY3NC00YWZlLWI4N2MtMDhhZTI5MmMzZWMzXkEyXkFqcGdeQXVyMDc2NTEzMw@@._V1_Ratio1.0000_AL_.jpg', 3),
@@ -22,7 +22,7 @@ insert into character
     /* second Bruce*/
 
 insert into movie
-(director, genre, posterurl, title, trailerurl, "year", franchise_id) values
+(director, genre, poster_url, title, trailer_url, "year", franchise_id) values
     ('Ridley Scott', 'Action', null, 'Gladiator', null, 2000, null),
     ('James Cameron', 'Drama',null,'Titanic',null, 1998, null),
     ('Sylvester Stallone', 'Action, Adventure, Thriller', 'https://image.tmdb.org/t/p/original/8jaGgmv8TB8exGRHngoMnpldueN.jpg', 'The Expendables', 'https://www.imdb.com/video/vi3501000217', 2010, 3),

@@ -40,4 +40,17 @@ public class FranchiseController {
         return franchise;
     }
 
+    @PutMapping("/{id}")
+    public Franchise updateFranchise(@PathVariable Long id, @RequestBody Franchise franchise) {
+        franchise.setFranchise_id(id);
+        return franchiseRepository.save(franchise);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteFranchise(@PathVariable Long id) {
+        if (franchiseRepository.existsById(id)) {
+            franchiseRepository.deleteById(id);
+        }
+    }
+
 }
