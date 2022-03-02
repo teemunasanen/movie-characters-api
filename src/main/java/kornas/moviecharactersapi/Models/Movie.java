@@ -72,6 +72,10 @@ public class Movie {
         return null;
     }
 
+    public Movie() {
+        super();
+    }
+
     public List<Character> getCharacters() {
         return characters;
     }

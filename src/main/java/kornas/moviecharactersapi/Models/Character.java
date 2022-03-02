@@ -16,6 +16,7 @@ public class Character {
     // Autoincrement Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true)
     private Long character_id;
 
     // Full name

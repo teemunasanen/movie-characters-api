@@ -1,9 +1,10 @@
 package kornas.moviecharactersapi.Controllers;
 
 import kornas.moviecharactersapi.Models.Character;
-import kornas.moviecharactersapi.Models.Movie;
-import kornas.moviecharactersapi.Repositories.CharacterRepository;
+import kornas.moviecharactersapi.Services.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,42 +15,46 @@ import java.util.List;
 public class CharacterController {
 
     @Autowired
-    private CharacterRepository characterRepository;
+    CharacterService characterService;
 
     //create
     @PostMapping("/")
-    public Character createCharacter(@RequestBody Character character) {
-        characterRepository.save(character);
-        return character;
+    public Character addCharacter(@RequestBody Character character) {
+        return characterService.addCharacter(character);
     }
 
     // Get All
     @GetMapping(value = "/")
-    public List<Character> getCharacters() {
-        return characterRepository.findAll();
+    public List<Character> getAllCharacters() {
+        return characterService.getAllCharacters();
     }
 
     //Read
-    @GetMapping("/{id}")
-    public Character getCharacter(@PathVariable Long id) {
-        Character character = null;
-        if (characterRepository.existsById(id)) {
-            // find will guarantee to find a unique character
-            character = characterRepository.findById(id).get();
-        }
-        return character;
+    @GetMapping("/{characterId}")
+    public Character getCharacter(@PathVariable Long characterId) {
+        return characterService.getCharacterById(characterId);
     }
 
-    @PutMapping("/{id}")
-    public Character updateCharacter(@PathVariable Long id, @RequestBody Character character) {
-        character.setCharacter_id(id);
-        return characterRepository.save(character);
+    @PutMapping("/{characterId}")
+    public ResponseEntity<String> updateCharacter(@PathVariable Long characterId, @RequestBody Character character) {
+       try {
+           characterService.updateCharacter(characterId, character);
+           return new ResponseEntity<>(HttpStatus.OK);
+       } catch (RuntimeException e) {
+           System.out.println(e.getMessage());
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+       }
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteCharacter(@PathVariable Long id) {
-        if (characterRepository.existsById(id)) {
-            characterRepository.deleteById(id);
+    @DeleteMapping("/{characterId}")
+    public ResponseEntity<String> deleteCharacter(@PathVariable Long characterId) {
+        try {
+            characterService.deleteCharacterById(characterId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch(RuntimeException e){
+            // log the error message
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

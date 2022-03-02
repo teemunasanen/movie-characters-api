@@ -1,9 +1,10 @@
 package kornas.moviecharactersapi.Controllers;
 
 import kornas.moviecharactersapi.Models.Franchise;
-import kornas.moviecharactersapi.Models.Movie;
-import kornas.moviecharactersapi.Repositories.FranchiseRepository;
+import kornas.moviecharactersapi.Services.FranchiseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,42 +15,45 @@ import java.util.List;
 public class FranchiseController {
 
     @Autowired
-    private FranchiseRepository franchiseRepository;
+    FranchiseService franchiseService;
 
     //create
     @PostMapping("/")
-    public Franchise createFranchise(@RequestBody Franchise franchise) {
-        franchise = franchiseRepository.save(franchise);
-        return franchise;
+    public Franchise addFranchise(@RequestBody Franchise franchise) {
+        return franchiseService.addFranchise(franchise);
     }
 
     // Get All
     @GetMapping(value = "/")
     public List<Franchise> getFranchises() {
-        return franchiseRepository.findAll();
+        return franchiseService.getAllFranchises();
     }
 
     //Read
-    @GetMapping("/{id}")
-    public Franchise getFranchise(@PathVariable Long id) {
-        Franchise franchise = null;
-        if (franchiseRepository.existsById(id)) {
-            // find will guarantee to find a unique franchise
-            franchise = franchiseRepository.findById(id).get();
+    @GetMapping("/{franchiseId}")
+    public Franchise getFranchise(@PathVariable Long franchiseId) {
+        return franchiseService.getFranchiseById(franchiseId);
+    }
+
+    @PutMapping("/{franchiseId}")
+    public ResponseEntity<String> updateFranchise(@PathVariable Long franchiseId, @RequestBody Franchise franchise) {
+        try {
+            franchiseService.updateFranchise(franchiseId, franchise);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return franchise;
     }
 
-    @PutMapping("/{id}")
-    public Franchise updateFranchise(@PathVariable Long id, @RequestBody Franchise franchise) {
-        franchise.setFranchise_id(id);
-        return franchiseRepository.save(franchise);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteFranchise(@PathVariable Long id) {
-        if (franchiseRepository.existsById(id)) {
-            franchiseRepository.deleteById(id);
+    @DeleteMapping("/{franchiseId}")
+    public ResponseEntity<String> deleteFranchise(@PathVariable Long franchiseId) {
+        try {
+            franchiseService.deleteFranchiseById(franchiseId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
