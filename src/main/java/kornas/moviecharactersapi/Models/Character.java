@@ -28,13 +28,12 @@ public class Character {
     private String alias;
 
     // Gender
-    @Enumerated(EnumType.STRING)
     @Column
-    private GenderType gender;
+    private String gender;
 
     // Picture (URL to photo – do not store an image)
     @Column
-    private URL photoURL;
+    private String photoURL;
 
     @ManyToMany
     @JoinTable(
@@ -90,19 +89,19 @@ public class Character {
         this.alias = alias;
     }
 
-    public GenderType getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(GenderType gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public URL getPhotoURL() {
+    public String getPhotoURL() {
         return photoURL;
     }
 
-    public void setPhotoURL(URL photoURL) {
+    public void setPhotoURL(String photoURL) {
         this.photoURL = photoURL;
     }
 
