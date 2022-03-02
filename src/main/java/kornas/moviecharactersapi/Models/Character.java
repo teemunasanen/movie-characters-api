@@ -1,11 +1,13 @@
 package kornas.moviecharactersapi.Models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.net.URL;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table
@@ -14,10 +16,11 @@ public class Character {
     // Autoincrement Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true)
     private Long character_id;
 
     // Full name
-    @Column(name = "name")
+    @Column
     @NotBlank
     @Size(min= 3, max= 100)
     private String name;
@@ -32,7 +35,7 @@ public class Character {
     private String gender;
 
     // Picture (URL to photo – do not store an image)
-    @Column
+    @Column(name = "photo_url")
     private String photoURL;
 
     @ManyToMany
@@ -43,22 +46,30 @@ public class Character {
     )
     private List<Movie> movies;
 
-
-    public Long getCharacter_id() {
-        return character_id;
+    @JsonGetter("movies")
+    public List<String> movieGetter() {
+        if(movies != null){
+            return movies.stream()
+                    .map(movie -> "/api/v1/movies/" + movie.getMovie_id()).collect(Collectors.toList());
+        }
+        return null;
     }
 
     @ManyToOne
     @JoinColumn(name = "franchise_id")
+    @Nullable
     public Franchise franchise;
 
     @JsonGetter("franchise")
     public String franchiseGetter() {
-        System.out.println(franchise);
         if(franchise != null){
             return "/api/v1/franchise" + franchise.getFranchise_id();
         }
         return null;
+    }
+
+    public Long getCharacter_id() {
+        return character_id;
     }
 
     public void setCharacter_id(Long character_id) {

@@ -1,8 +1,7 @@
 package kornas.moviecharactersapi.Controllers;
 
-import kornas.moviecharactersapi.Models.Character;
 import kornas.moviecharactersapi.Models.Movie;
-import kornas.moviecharactersapi.Repositories.MovieRepository;
+import kornas.moviecharactersapi.Services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,39 +15,47 @@ import java.util.List;
 public class MovieController {
 
     @Autowired
-    private MovieRepository movieRepository;
+    MovieService movieService;
 
     //create
     @PostMapping("/")
-    public Movie createMovie(@RequestBody Movie movie) {
-        movie = movieRepository.save(movie);
-        return movie;
+    public Movie addMovie(@RequestBody Movie movie) {
+        return movieService.addMovie(movie);
     }
 
     // Get All
     @GetMapping(value = "/")
     public List<Movie> getMovies() {
-        return movieRepository.findAll();
+        return movieService.getAllMovies();
     }
 
     //Read
-    @GetMapping("/{id}")
-    public Movie getMovie(@PathVariable Long id) {
-        Movie movie = null;
-        if (movieRepository.existsById(id)) {
-            // find will guarantee to find a unique movie
-            movie = movieRepository.findById(id).get();
-        }
-        return movie;
+    @GetMapping("/{movieId}")
+    public Movie getMovie(@PathVariable Long movieId) {
+        return movieService.getMovieById(movieId);
     }
 
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public Movie updateMovie(@PathVariable Long id, @RequestBody Movie movie) {
-        if (movieRepository.existsById(id)) {
-            movieRepository.save(updateMovie(id, movie));
+    @PutMapping("/{movieId}")
+    public ResponseEntity<String> updateMovie(@PathVariable Long movieId, @RequestBody Movie movie) {
+        try {
+            movieService.updateMovie(movieId, movie);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return movie;
+    }
+
+    @DeleteMapping("/{movieId}")
+    public ResponseEntity<String> deleteMovie(@PathVariable Long movieId) {
+        try {
+            movieService.deleteMovieById(movieId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }
