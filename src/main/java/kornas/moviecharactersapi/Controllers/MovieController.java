@@ -13,15 +13,14 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@SecurityRequirement(name = "keycloak_implicit")
 @RequestMapping("/api/v1/movies")
-@PreAuthorize("hasAuthority('GROUP_user')")
 public class MovieController {
-
     @Autowired
     MovieService movieService;
 
     //create
+    @SecurityRequirement(name = "keycloak_implicit")
+    @PreAuthorize("hasAuthority('GROUP_user')")
     @PostMapping("/")
     public Movie addMovie(@RequestBody Movie movie) {
         return movieService.addMovie(movie);
@@ -39,7 +38,8 @@ public class MovieController {
         return movieService.getMovieById(movieId);
     }
 
-
+    @SecurityRequirement(name = "keycloak_implicit")
+    @PreAuthorize("hasAuthority('GROUP_user')")
     @PutMapping("/{movieId}")
     public ResponseEntity<String> updateMovie(@PathVariable Long movieId, @RequestBody Movie movie) {
         try {
@@ -51,6 +51,8 @@ public class MovieController {
         }
     }
 
+    @SecurityRequirement(name = "keycloak_implicit")
+    @PreAuthorize("hasAuthority('GROUP_user')")
     @DeleteMapping("/{movieId}")
     public ResponseEntity<String> deleteMovie(@PathVariable Long movieId) {
         try {

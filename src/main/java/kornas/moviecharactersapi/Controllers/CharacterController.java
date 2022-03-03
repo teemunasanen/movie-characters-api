@@ -13,15 +13,15 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@SecurityRequirement(name = "keycloak_implicit")
 @RequestMapping("/api/v1/characters")
-@PreAuthorize("hasAuthority('GROUP_user')")
 public class CharacterController {
 
     @Autowired
     CharacterService characterService;
 
     //create
+    @SecurityRequirement(name = "keycloak_implicit")
+    @PreAuthorize("hasAuthority('GROUP_user')")
     @PostMapping("/")
     public Character addCharacter(@RequestBody Character character) {
         return characterService.addCharacter(character);
@@ -39,6 +39,8 @@ public class CharacterController {
         return characterService.getCharacterById(characterId);
     }
 
+    @SecurityRequirement(name = "keycloak_implicit")
+    @PreAuthorize("hasAuthority('GROUP_user')")
     @PutMapping("/{characterId}")
     public ResponseEntity<String> updateCharacter(@PathVariable Long characterId, @RequestBody Character character) {
        try {
@@ -50,6 +52,8 @@ public class CharacterController {
        }
     }
 
+    @SecurityRequirement(name = "keycloak_implicit")
+    @PreAuthorize("hasAuthority('GROUP_user')")
     @DeleteMapping("/{characterId}")
     public ResponseEntity<String> deleteCharacter(@PathVariable Long characterId) {
         try {

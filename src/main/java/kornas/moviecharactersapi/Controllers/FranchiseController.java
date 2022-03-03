@@ -13,15 +13,16 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-@SecurityRequirement(name = "keycloak_implicit")
 @RequestMapping("/api/v1/franchises")
-@PreAuthorize("hasAuthority('GROUP_user')")
 public class FranchiseController {
 
     @Autowired
     FranchiseService franchiseService;
 
+
     //create
+    @SecurityRequirement(name = "keycloak_implicit")
+    @PreAuthorize("hasAuthority('GROUP_user')")
     @PostMapping("/")
     public Franchise addFranchise(@RequestBody Franchise franchise) {
         return franchiseService.addFranchise(franchise);
@@ -39,6 +40,8 @@ public class FranchiseController {
         return franchiseService.getFranchiseById(franchiseId);
     }
 
+    @SecurityRequirement(name = "keycloak_implicit")
+    @PreAuthorize("hasAuthority('GROUP_user')")
     @PutMapping("/{franchiseId}")
     public ResponseEntity<String> updateFranchise(@PathVariable Long franchiseId, @RequestBody Franchise franchise) {
         try {
@@ -50,6 +53,8 @@ public class FranchiseController {
         }
     }
 
+    @SecurityRequirement(name = "keycloak_implicit")
+    @PreAuthorize("hasAuthority('GROUP_user')")
     @DeleteMapping("/{franchiseId}")
     public ResponseEntity<String> deleteFranchise(@PathVariable Long franchiseId) {
         try {
