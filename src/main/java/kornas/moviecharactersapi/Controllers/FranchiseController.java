@@ -2,11 +2,13 @@ package kornas.moviecharactersapi.Controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import kornas.moviecharactersapi.Models.Franchise;
 import kornas.moviecharactersapi.Services.FranchiseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +22,10 @@ public class FranchiseController {
     FranchiseService franchiseService;
 
     @Operation(summary = "Create Franchise")
+
+    //create
+    @SecurityRequirement(name = "keycloak_implicit")
+    @PreAuthorize("hasAuthority('GROUP_user')")
     @PostMapping("/")
     public Franchise addFranchise(@RequestBody Franchise franchise) {
         return franchiseService.addFranchise(franchise);
@@ -38,6 +44,8 @@ public class FranchiseController {
     }
 
     @Operation(summary = "Update Franchise by ID")
+    @SecurityRequirement(name = "keycloak_implicit")
+    @PreAuthorize("hasAuthority('GROUP_user')")
     @PutMapping("/{franchiseId}")
     public ResponseEntity<String> updateFranchise(@Parameter(description = "ID of Franchise to be updated")@PathVariable Long franchiseId, @RequestBody Franchise franchise) {
         try {
@@ -50,6 +58,8 @@ public class FranchiseController {
     }
 
     @Operation(summary = "Delete Franchise by ID")
+    @SecurityRequirement(name = "keycloak_implicit")
+    @PreAuthorize("hasAuthority('GROUP_user')")
     @DeleteMapping("/{franchiseId}")
     public ResponseEntity<String> deleteFranchise(@Parameter(description = "ID of Franchise to be deleted")@PathVariable Long franchiseId) {
         try {

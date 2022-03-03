@@ -28,9 +28,10 @@ public class CharacterServiceImpl implements CharacterService{
     @Override
     public void updateCharacter(Long characterId, Character character) {
         // check if the user with the passed id exists or not
-        Character characterDB = characterRepository.findById(characterId).orElseThrow();
-        // If user exists then updated
-        characterRepository.save(character);
+        if (characterRepository.findById(characterId).isPresent()) {
+            // If user exists then updated
+            characterRepository.save(character);
+        }
     }
 
     @Override

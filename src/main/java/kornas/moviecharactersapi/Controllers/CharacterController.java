@@ -2,11 +2,13 @@ package kornas.moviecharactersapi.Controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import kornas.moviecharactersapi.Models.Character;
 import kornas.moviecharactersapi.Services.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +21,9 @@ public class CharacterController {
     @Autowired
     CharacterService characterService;
 
+    //create
+    @SecurityRequirement(name = "keycloak_implicit")
+    @PreAuthorize("hasAuthority('GROUP_user')")
     @Operation(summary = "Create Character")
     @PostMapping("/")
     public Character addCharacter(@RequestBody Character character) {
@@ -37,6 +42,9 @@ public class CharacterController {
         return characterService.getCharacterById(characterId);
     }
     @Operation(summary = "Update Character")
+
+    @SecurityRequirement(name = "keycloak_implicit")
+    @PreAuthorize("hasAuthority('GROUP_user')")
     @PutMapping("/{characterId}")
     public ResponseEntity<String> updateCharacter(@Parameter(description = "ID of Character to be updated")@PathVariable Long characterId, @RequestBody Character character) {
        try {
@@ -47,6 +55,9 @@ public class CharacterController {
            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
        }
     }
+
+    @SecurityRequirement(name = "keycloak_implicit")
+    @PreAuthorize("hasAuthority('GROUP_user')")
     @Operation(summary = "Delete Character by ID")
     @DeleteMapping("/{characterId}")
     public ResponseEntity<String> deleteCharacter(@Parameter(description = "ID of Character to be deleted")@PathVariable Long characterId) {
