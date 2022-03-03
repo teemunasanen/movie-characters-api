@@ -1,17 +1,21 @@
 package kornas.moviecharactersapi.Controllers;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import kornas.moviecharactersapi.Models.Franchise;
 import kornas.moviecharactersapi.Services.FranchiseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
+@SecurityRequirement(name = "keycloak_implicit")
 @RequestMapping("/api/v1/franchises")
+@PreAuthorize("hasAuthority('GROUP_user')")
 public class FranchiseController {
 
     @Autowired

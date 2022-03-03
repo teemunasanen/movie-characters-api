@@ -1,17 +1,21 @@
 package kornas.moviecharactersapi.Controllers;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import kornas.moviecharactersapi.Models.Character;
 import kornas.moviecharactersapi.Services.CharacterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
+@SecurityRequirement(name = "keycloak_implicit")
 @RequestMapping("/api/v1/characters")
+@PreAuthorize("hasAuthority('GROUP_user')")
 public class CharacterController {
 
     @Autowired
