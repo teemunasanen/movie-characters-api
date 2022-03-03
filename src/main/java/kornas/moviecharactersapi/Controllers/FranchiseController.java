@@ -1,5 +1,7 @@
 package kornas.moviecharactersapi.Controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import kornas.moviecharactersapi.Models.Franchise;
 import kornas.moviecharactersapi.Services.FranchiseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,26 +19,27 @@ public class FranchiseController {
     @Autowired
     FranchiseService franchiseService;
 
-    //create
+    @Operation(summary = "Create Franchise")
     @PostMapping("/")
     public Franchise addFranchise(@RequestBody Franchise franchise) {
         return franchiseService.addFranchise(franchise);
     }
 
-    // Get All
+    @Operation(summary = "Get Franchises")
     @GetMapping(value = "/")
     public List<Franchise> getFranchises() {
         return franchiseService.getAllFranchises();
     }
 
-    //Read
+    @Operation(summary = "Get Franchise by ID")
     @GetMapping("/{franchiseId}")
-    public Franchise getFranchise(@PathVariable Long franchiseId) {
+    public Franchise getFranchise(@Parameter(description = "ID of Franchise to be searched")@PathVariable Long franchiseId) {
         return franchiseService.getFranchiseById(franchiseId);
     }
 
+    @Operation(summary = "Update Franchise by ID")
     @PutMapping("/{franchiseId}")
-    public ResponseEntity<String> updateFranchise(@PathVariable Long franchiseId, @RequestBody Franchise franchise) {
+    public ResponseEntity<String> updateFranchise(@Parameter(description = "ID of Franchise to be updated")@PathVariable Long franchiseId, @RequestBody Franchise franchise) {
         try {
             franchiseService.updateFranchise(franchiseId, franchise);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -46,8 +49,9 @@ public class FranchiseController {
         }
     }
 
+    @Operation(summary = "Delete Franchise by ID")
     @DeleteMapping("/{franchiseId}")
-    public ResponseEntity<String> deleteFranchise(@PathVariable Long franchiseId) {
+    public ResponseEntity<String> deleteFranchise(@Parameter(description = "ID of Franchise to be deleted")@PathVariable Long franchiseId) {
         try {
             franchiseService.deleteFranchiseById(franchiseId);
             return new ResponseEntity<>(HttpStatus.OK);
