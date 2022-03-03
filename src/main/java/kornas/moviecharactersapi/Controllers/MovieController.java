@@ -1,5 +1,7 @@
 package kornas.moviecharactersapi.Controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import kornas.moviecharactersapi.Models.Movie;
 import kornas.moviecharactersapi.Services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,27 +19,27 @@ public class MovieController {
     @Autowired
     MovieService movieService;
 
-    //create
+    @Operation(summary = "Create Movie")
     @PostMapping("/")
     public Movie addMovie(@RequestBody Movie movie) {
         return movieService.addMovie(movie);
     }
 
-    // Get All
+    @Operation(summary = "Get Movies")
     @GetMapping(value = "/")
     public List<Movie> getMovies() {
         return movieService.getAllMovies();
     }
 
-    //Read
+    @Operation(summary = "Get Movie by ID")
     @GetMapping("/{movieId}")
-    public Movie getMovie(@PathVariable Long movieId) {
+    public Movie getMovie(@Parameter(description = "ID of Movie to be searched")@PathVariable Long movieId) {
         return movieService.getMovieById(movieId);
     }
 
-
+    @Operation(summary = "Update Movie by ID")
     @PutMapping("/{movieId}")
-    public ResponseEntity<String> updateMovie(@PathVariable Long movieId, @RequestBody Movie movie) {
+    public ResponseEntity<String> updateMovie(@Parameter(description = "ID of Movie to be updated")@PathVariable Long movieId, @RequestBody Movie movie) {
         try {
             movieService.updateMovie(movieId, movie);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -47,8 +49,9 @@ public class MovieController {
         }
     }
 
+    @Operation(summary = "Delete Movie by ID")
     @DeleteMapping("/{movieId}")
-    public ResponseEntity<String> deleteMovie(@PathVariable Long movieId) {
+    public ResponseEntity<String> deleteMovie(@Parameter(description = "ID of Movie to be deleted")@PathVariable Long movieId) {
         try {
             movieService.deleteMovieById(movieId);
             return new ResponseEntity<>(HttpStatus.OK);
