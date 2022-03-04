@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@SecurityRequirement(name = "keycloak_implicit")
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/characters")
@@ -22,8 +23,7 @@ public class CharacterController {
     CharacterService characterService;
 
     //create
-    @SecurityRequirement(name = "keycloak_implicit")
-    @PreAuthorize("hasAuthority('GROUP_user')")
+    @PreAuthorize("hasAuthority('ROLE_user')")
     @Operation(summary = "Create Character")
     @PostMapping("/")
     public Character addCharacter(@RequestBody Character character) {
@@ -41,10 +41,9 @@ public class CharacterController {
     public Character getCharacter(@Parameter(description = "ID of Character to be searched")@PathVariable Long characterId) {
         return characterService.getCharacterById(characterId);
     }
-    @Operation(summary = "Update Character")
 
-    @SecurityRequirement(name = "keycloak_implicit")
-    @PreAuthorize("hasAuthority('GROUP_user')")
+    @Operation(summary = "Update Character")
+    @PreAuthorize("hasAuthority('ROLE_user')")
     @PutMapping("/{characterId}")
     public ResponseEntity<String> updateCharacter(@Parameter(description = "ID of Character to be updated")@PathVariable Long characterId, @RequestBody Character character) {
        try {
@@ -56,8 +55,7 @@ public class CharacterController {
        }
     }
 
-    @SecurityRequirement(name = "keycloak_implicit")
-    @PreAuthorize("hasAuthority('GROUP_user')")
+    @PreAuthorize("hasAuthority('ROLE_user')")
     @Operation(summary = "Delete Character by ID")
     @DeleteMapping("/{characterId}")
     public ResponseEntity<String> deleteCharacter(@Parameter(description = "ID of Character to be deleted")@PathVariable Long characterId) {

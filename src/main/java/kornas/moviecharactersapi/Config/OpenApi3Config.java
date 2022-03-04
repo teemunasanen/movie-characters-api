@@ -9,10 +9,16 @@ import io.swagger.v3.oas.annotations.security.OAuthScope;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
 @OpenAPIDefinition(info = @Info(title = "Movie Character API Web", description = "Hibernate with Spring Security", version = "0.1.0"))
-@SecurityScheme(name = "keycloak_implicit", type = SecuritySchemeType.OAUTH2,
-        flows = @OAuthFlows(authorizationCode = @OAuthFlow(authorizationUrl = "${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/auth", tokenUrl = "${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/token", scopes = {
-                @OAuthScope(name = "openid", description = "OpenID Connect Endpoints"),
-                @OAuthScope(name = "groups", description = "Group membership information"),
+@SecurityScheme(
+        name = "keycloak_implicit",
+        type = SecuritySchemeType.OAUTH2,
+        flows = @OAuthFlows(
+                authorizationCode = @OAuthFlow(
+                        authorizationUrl = "${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/auth",
+                        tokenUrl = "${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/token",
+                        scopes = {
+                                @OAuthScope(name = "openid", description = "OpenID Connect Endpoints"),
+                                @OAuthScope(name = "groups", description = "Group membership information"),
         }))
 )
 

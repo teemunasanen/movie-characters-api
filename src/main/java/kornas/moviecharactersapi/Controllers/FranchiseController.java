@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/franchises")
+@SecurityRequirement(name = "keycloak_implicit")
 public class FranchiseController {
 
     @Autowired
@@ -24,8 +25,7 @@ public class FranchiseController {
     @Operation(summary = "Create Franchise")
 
     //create
-    @SecurityRequirement(name = "keycloak_implicit")
-    @PreAuthorize("hasAuthority('GROUP_user')")
+    @PreAuthorize("hasAuthority('ROLE_user')")
     @PostMapping("/")
     public Franchise addFranchise(@RequestBody Franchise franchise) {
         return franchiseService.addFranchise(franchise);
@@ -44,8 +44,7 @@ public class FranchiseController {
     }
 
     @Operation(summary = "Update Franchise by ID")
-    @SecurityRequirement(name = "keycloak_implicit")
-    @PreAuthorize("hasAuthority('GROUP_user')")
+    @PreAuthorize("hasAuthority('ROLE_user')")
     @PutMapping("/{franchiseId}")
     public ResponseEntity<String> updateFranchise(@Parameter(description = "ID of Franchise to be updated")@PathVariable Long franchiseId, @RequestBody Franchise franchise) {
         try {
@@ -58,8 +57,7 @@ public class FranchiseController {
     }
 
     @Operation(summary = "Delete Franchise by ID")
-    @SecurityRequirement(name = "keycloak_implicit")
-    @PreAuthorize("hasAuthority('GROUP_user')")
+    @PreAuthorize("hasAuthority('ROLE_user')")
     @DeleteMapping("/{franchiseId}")
     public ResponseEntity<String> deleteFranchise(@Parameter(description = "ID of Franchise to be deleted")@PathVariable Long franchiseId) {
         try {
