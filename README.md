@@ -1,6 +1,7 @@
 # movie-characters-api
 
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+[![web](https://img.shields.io/static/v1?logo=heroku&message=Online&label=Heroku&color=430098)](https://movie-app-2022.herokuapp.com/swagger-ui/index.html)
 
 Noroff Java Fullstack bootcamp Assignment 7: Create a Web API and database with Spring
 
@@ -8,6 +9,10 @@ Noroff Java Fullstack bootcamp Assignment 7: Create a Web API and database with 
 - [Spring](https://spring.io/) Web API to access endpoints, which are exposed and documentation provided by [Swagger](https://swagger.io/) OpenAPI
 - Access Management with [Keycloak](https://www.keycloak.org/)
 - [Docker](https://www.docker.com/) image deployed on [Heroku](https://www.heroku.com/)
+
+![movie app](./assets/movie-app.PNG)
+
+![keycloak](./assets/movie-app-sec.PNG)
 
 ## Table of Contents
 
@@ -21,8 +26,9 @@ Noroff Java Fullstack bootcamp Assignment 7: Create a Web API and database with 
 
 ## Security
 
-Security layer added to app... 
-Keycloak access management is handling logging and registering of users
+Security layer added to app.
+
+- Keycloak access management is handling logging and registering of users
 
 ## Install
 
@@ -51,7 +57,7 @@ Local URLS:
 - http://localhost:8080/swagger-ui/index.html
 - http://localhost:8080/movie-docs
 
-[Heroku Deployment]()
+[Heroku Deployment](https://movie-app-2022.herokuapp.com/swagger-ui/index.html)
 
 ## Maintainers
 
