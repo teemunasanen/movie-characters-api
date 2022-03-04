@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 @Entity
 @Table
 public class Character {
-
     // Autoincrement Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,12 +21,12 @@ public class Character {
     // Full name
     @Column
     @NotBlank
-    @Size(min= 3, max= 100)
+    @Size(min = 3, max = 100)
     private String name;
 
     // Alias (if applicable)
     @Column
-    @Size(max= 100)
+    @Size(max = 100)
     private String alias;
 
     // Gender
@@ -48,7 +47,7 @@ public class Character {
 
     @JsonGetter("movies")
     public List<String> movieGetter() {
-        if(movies != null){
+        if (movies != null) {
             return movies.stream()
                     .map(movie -> "/api/v1/movies/" + movie.getMovie_id()).collect(Collectors.toList());
         }
@@ -62,7 +61,7 @@ public class Character {
 
     @JsonGetter("franchise")
     public String franchiseGetter() {
-        if(franchise != null){
+        if (franchise != null) {
             return "/api/v1/franchise" + franchise.getFranchise_id();
         }
         return null;

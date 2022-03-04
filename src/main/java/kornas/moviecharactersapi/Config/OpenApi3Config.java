@@ -1,4 +1,8 @@
 package kornas.moviecharactersapi.Config;
+/*
+ * Built based on -Hibernate with CI- repo by Greg Linklater
+ * https://gitlab.com/noroff-accelerate/java/projects/hibernate-with-ci/-/tree/master
+ */
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

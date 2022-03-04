@@ -1,3 +1,4 @@
+/* Initial Data for Postgres db */
 insert into franchise
 (description, name) values
     ('star wars saga', 'Star Wars Saga'),
@@ -19,7 +20,7 @@ insert into character
     ('R2-D2', 'Male', 'Kenny Baker','https://imdb-api.com/images/original/MV5BZDQ5MjMwZjItMmIzMS00NjhmLTljMjktY2VmMmZkZjhhZjgwXkEyXkFqcGdeQXVyNjUxMjc1OTM@._V1_Ratio2.3400_AL_.jpg', 1),
     ('Frodo', 'Male', 'Elijah Wood','https://imdb-api.com/images/original/MV5BODM1MGNhY2UtZDYzMS00Y2ZmLWEwNTQtNjUxYWU4MzdjY2UyXkEyXkFqcGdeQXVyMzQ3Nzk5MTU@._V1_Ratio1.2400_AL_.jpg', 2),
     ('Bruce', 'Male', 'Bruce Willis', 'https://imdb-api.com/images/original/MV5BZGFmMDg1M2ItNDA0Ni00OTNmLTgwOWUtMmJmMzE1ZTJlOWZjXkEyXkFqcGdeQXVyNTk5NzQ5Ng@@._V1_Ratio1.0000_AL_.jpg', 6);
-    /* second Bruce*/
+
 
 insert into movie
 (director, genre, poster_url, title, trailer_url, "year", franchise_id) values
@@ -36,6 +37,3 @@ insert into movie
 insert into movie_characters
     (movie_id, character_id) values
         (1,5),(1,6),(5,4),(4,1),(3,3),(6,7),(7,1),(3,2),(8,8);
-
-/* insert into franchise_characters(franchise_id, character_id) values( , );*/
-
