@@ -52,7 +52,7 @@ public class Movie {
 
     @JsonGetter("characters")
     public List<String> characterGetter() {
-        if(characters != null){
+        if (characters != null) {
             return characters.stream()
                     .map(character -> "/api/v1/characters/" + character.getCharacter_id()).collect(Collectors.toList());
         }
@@ -66,7 +66,7 @@ public class Movie {
 
     @JsonGetter("franchise")
     public String franchiseGetter() {
-        if(franchise != null){
+        if (franchise != null) {
             return "/api/v1/franchise" + franchise.getFranchise_id();
         }
         return null;

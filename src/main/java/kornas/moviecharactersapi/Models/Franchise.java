@@ -1,6 +1,7 @@
 package kornas.moviecharactersapi.Models;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -19,7 +20,7 @@ public class Franchise {
     // Name
     @Column
     @NotBlank
-    @Size(max= 200)
+    @Size(max = 200)
     private String name;
 
     // Description
@@ -31,7 +32,7 @@ public class Franchise {
 
     @JsonGetter("characters")
     public List<String> characterGetter() {
-        if(characters != null){
+        if (characters != null) {
             return characters.stream()
                     .map(character -> {
                         return "/api/v1/characters/" + character.getCharacter_id();
@@ -45,7 +46,7 @@ public class Franchise {
 
     @JsonGetter("movies")
     public List<String> movieGetter() {
-        if(movies != null){
+        if (movies != null) {
             return movies.stream()
                     .map(movie -> "/api/v1/movies/" + movie.getMovie_id()).collect(Collectors.toList());
         }

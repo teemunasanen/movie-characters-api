@@ -1,8 +1,9 @@
 package kornas.moviecharactersapi.Config;
 /*
-* Built based on -Hibernate with CI- repo by Greg Linklater
-* https://gitlab.com/noroff-accelerate/java/projects/hibernate-with-ci/-/tree/master
-*/
+ * Built based on -Hibernate with CI- repo by Greg Linklater
+ * https://gitlab.com/noroff-accelerate/java/projects/hibernate-with-ci/-/tree/master
+ */
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
@@ -19,6 +20,7 @@ import java.util.HashSet;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final Logger logger = LoggerFactory.getLogger(getClass());
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and()
@@ -64,6 +66,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     oauth2.jwt().jwtAuthenticationConverter(authnConverter);
                 });
     }
-
-
 }

@@ -17,11 +17,9 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/characters")
 public class CharacterController {
-
     @Autowired
     CharacterService characterService;
 
-    //create
     @SecurityRequirement(name = "keycloak_implicit")
     @PreAuthorize("hasAuthority('GROUP_user')")
     @Operation(summary = "Create Character")

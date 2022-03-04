@@ -21,7 +21,6 @@ public class MovieController {
     MovieService movieService;
 
     @Operation(summary = "Create Movie")
-    //create
     @SecurityRequirement(name = "keycloak_implicit")
     @PreAuthorize("hasAuthority('GROUP_user')")
     @PostMapping("/")
