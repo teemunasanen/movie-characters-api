@@ -1,5 +1,8 @@
 package kornas.moviecharactersapi.Config;
-
+/*
+* Built based on -Hibernate with CI- repo by Greg Linklater
+* https://gitlab.com/noroff-accelerate/java/projects/hibernate-with-ci/-/tree/master
+*/
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
@@ -16,7 +19,6 @@ import java.util.HashSet;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and()
@@ -31,24 +33,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     // Convert Jwt to AbstractAuthenticationToken(authorities)
                     JwtAuthenticationConverter authnConverter = new JwtAuthenticationConverter();
 
-                    // Convert Jwt to GrantedAuthorities
+                    // Convert Jwt scopes claim to GrantedAuthorities
                     JwtGrantedAuthoritiesConverter scopeConverter = new JwtGrantedAuthoritiesConverter();
 
-                    scopeConverter.setAuthoritiesClaimName("groups");
-                    scopeConverter.setAuthorityPrefix("GROUP_");
+                    // Convert Jwt groups claim to GrantedAuthorities
+                    JwtGrantedAuthoritiesConverter groupConverter = new JwtGrantedAuthoritiesConverter();
+                    groupConverter.setAuthorityPrefix("GROUP_");
+                    groupConverter.setAuthoritiesClaimName("groups");
 
+                    // Jwt -> GrantedAuthorities -> AbstractAuthenticationToken
                     authnConverter.setJwtGrantedAuthoritiesConverter(jwt -> {
                         // This will read the 'scope' claim inside the payload
                         Collection<GrantedAuthority> scopes = scopeConverter.convert(jwt);
 
+                        // This will read the 'groups' claim you configured above
+                        // jwt["groups"] -> new GrantedAuthority("GROUP_groupName")
+                        Collection<GrantedAuthority> groups = groupConverter.convert(jwt);
+
                         // Merge the above sets
                         HashSet<GrantedAuthority> union = new HashSet<>();
                         union.addAll(scopes);
+                        union.addAll(groups);
 
                         for (var a : union) {
                             logger.warn("JWT Authority: {}", a.getAuthority());
                         }
-
                         return union;
                     });
 
