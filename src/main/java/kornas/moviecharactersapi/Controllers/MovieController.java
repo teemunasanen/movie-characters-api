@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@SecurityRequirement(name = "keycloak_implicit")
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/movies")
 public class MovieController {
@@ -24,6 +23,7 @@ public class MovieController {
     @Operation(summary = "Create Movie")
     //create
     @PreAuthorize("hasAuthority('ROLE_user')")
+    @SecurityRequirement(name = "keycloak_implicit")
     @PostMapping("/")
     public Movie addMovie(@RequestBody Movie movie) {
         return movieService.addMovie(movie);
@@ -43,6 +43,7 @@ public class MovieController {
 
     @Operation(summary = "Update Movie by ID")
     @PreAuthorize("hasAuthority('ROLE_user')")
+    @SecurityRequirement(name = "keycloak_implicit")
     @PutMapping("/{movieId}")
     public ResponseEntity<String> updateMovie(@Parameter(description = "ID of Movie to be updated")@PathVariable Long movieId, @RequestBody Movie movie) {
         try {
@@ -56,6 +57,7 @@ public class MovieController {
 
     @Operation(summary = "Delete Movie by ID")
     @PreAuthorize("hasAuthority('ROLE_user')")
+    @SecurityRequirement(name = "keycloak_implicit")
     @DeleteMapping("/{movieId}")
     public ResponseEntity<String> deleteMovie(@Parameter(description = "ID of Movie to be deleted")@PathVariable Long movieId) {
         try {

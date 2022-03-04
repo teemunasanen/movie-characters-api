@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         // Specify paths where public access is allowed
                         .antMatchers("/movie-docs", "/movie-docs/*", "/movie-docs/**").permitAll()
                         .antMatchers("/swagger-ui", "/swagger-ui/*", "/swagger-ui/**").permitAll()
-                        .antMatchers(HttpMethod.GET).permitAll()
+                        .antMatchers(HttpMethod.GET, "/api/**").permitAll()
                         // All remaining paths require authentication
                         .anyRequest().authenticated())
 

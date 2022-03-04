@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@SecurityRequirement(name = "keycloak_implicit")
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/characters")
@@ -24,6 +24,7 @@ public class CharacterController {
 
     //create
     @PreAuthorize("hasAuthority('ROLE_user')")
+    @SecurityRequirement(name = "keycloak_implicit")
     @Operation(summary = "Create Character")
     @PostMapping("/")
     public Character addCharacter(@RequestBody Character character) {
@@ -44,6 +45,7 @@ public class CharacterController {
 
     @Operation(summary = "Update Character")
     @PreAuthorize("hasAuthority('ROLE_user')")
+    @SecurityRequirement(name = "keycloak_implicit")
     @PutMapping("/{characterId}")
     public ResponseEntity<String> updateCharacter(@Parameter(description = "ID of Character to be updated")@PathVariable Long characterId, @RequestBody Character character) {
        try {
@@ -56,6 +58,7 @@ public class CharacterController {
     }
 
     @PreAuthorize("hasAuthority('ROLE_user')")
+    @SecurityRequirement(name = "keycloak_implicit")
     @Operation(summary = "Delete Character by ID")
     @DeleteMapping("/{characterId}")
     public ResponseEntity<String> deleteCharacter(@Parameter(description = "ID of Character to be deleted")@PathVariable Long characterId) {
