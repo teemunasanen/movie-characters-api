@@ -39,10 +39,7 @@ https://github.com/teemunasanen/movie-characters-api.git
 
 ## Usage
 
-Run locally with Docker (Docker Desktop is needed)
-```
-docker-compose up
-```
+Run locally with IDE of your choice (IntelliJ is great!)
 
 ## API
 

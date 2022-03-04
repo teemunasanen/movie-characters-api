@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,19 +20,23 @@ public class Movie {
 
     // Movie title
     @Column
+    @NotBlank
+    @Size(min = 1, max = 200)
     private String title;
 
 
     // Genre (just a simple string of comma separated genres, there is no genre modelling required as a base)
     @Column
+    @Size(max = 100)
     private String genre;
 
     // Release year
-    @Column
+    @Column(columnDefinition = "integer default 2022")
     private Integer year;
 
     // Director (just a string name, no director modelling required as a base)
     @Column
+    @Size(max = 200)
     private String director;
 
     // Picture (URL to a movie poster)
